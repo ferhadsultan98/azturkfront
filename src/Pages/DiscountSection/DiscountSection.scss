@@ -1,0 +1,493 @@
+$primaryColor: #b72d44;
+$primaryLightColor: lighten(#b72d44, 35%);
+$primaryDarkColor: darken(#b72d44, 15%);
+$accentColor: #2db78a;
+$textColor: #333333;
+$lightTextColor: #ffffff;
+$darkBackgroundColor: #2c2c2c;
+$lightBackgroundColor: #f9f5f6;
+$borderRadius: 8px;
+$boxShadow: 0 4px 12px rgba(183, 45, 68, 0.12);
+$transitionDuration: 0.3s;
+
+$breakpointSm: 576px;
+$breakpointMd: 768px;
+$breakpointLg: 992px;
+$breakpointXl: 1200px;
+button {
+  font-family: "Montserrat", sans-serif;
+}
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+.discountSection {
+  font-family: "Poppins", sans-serif;
+  color: $textColor;
+  margin: 0 auto;
+  padding: 7rem 1rem;
+  font-family: "Montserrat", sans-serif;
+
+  @media (max-width: $breakpointMd) {
+    padding: 1.5rem 0.75rem;
+  }
+
+
+
+  > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+.discountHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+
+  .discountBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: $primaryColor;
+    color: $lightTextColor;
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    box-shadow: $boxShadow;
+
+    .discountIcon {
+      font-size: 1rem;
+      animation: pulse 2s infinite;
+    }
+
+    @media (max-width: $breakpointSm) {
+      font-size: 0.75rem;
+      padding: 0.4rem 1rem;
+    }
+  }
+
+  .discountTitle {
+    color: $primaryColor;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+
+    @media (max-width: $breakpointMd) {
+      font-size: 2rem;
+    }
+
+    @media (max-width: $breakpointSm) {
+      font-size: 1.75rem;
+    }
+  }
+
+  .discountSubtitle {
+    color: $textColor;
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+
+    @media (max-width: $breakpointSm) {
+      font-size: 1rem;
+    }
+  }
+}
+
+.discountProductsSlider {
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.discountProductsTrack {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.discountProductCard {
+  flex: 0 0 25%;
+  min-width: 260px;
+  background-color: $lightTextColor;
+  border-radius: $borderRadius;
+  overflow: hidden;
+  box-shadow: $boxShadow;
+  transition: transform $transitionDuration ease,
+    box-shadow $transitionDuration ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0.75rem;
+
+  @media (max-width: $breakpointMd) {
+    min-width: 220px;
+  }
+
+  @media (max-width: $breakpointSm) {
+    min-width: 100%;
+    margin: 0 0.4rem;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba($primaryColor, 0.15);
+  }
+
+  .discountBadgeCard {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 3;
+
+    .discountPercentage {
+      background-color: $primaryColor;
+      color: $lightTextColor;
+      padding: 0.3rem 0.6rem;
+      border-radius: 15px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      box-shadow: 0 1px 6px rgba($primaryColor, 0.4);
+    }
+  }
+
+  .discountProductImageWrapper {
+    position: relative;
+    padding-top: 60%;
+    overflow: hidden;
+
+    .discountProductImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transform: scale(1.05);
+      transition: transform $transitionDuration ease;
+    }
+  }
+
+  &:hover .discountProductImage {
+    transform: scale(1.1);
+  }
+
+  .discountProductInfo {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    .discountProductName {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: $darkBackgroundColor;
+    }
+
+    .discountProductPrice {
+      font-weight: 700;
+      color: $primaryColor;
+      font-size: 1.125rem;
+      margin-bottom: 1rem;
+    }
+
+    .discountPriceWrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+
+      .originalPrice {
+        font-size: 0.85rem;
+        color: rgba($textColor, 0.6);
+        text-decoration: line-through;
+        font-weight: 500;
+      }
+    }
+
+    .discountProductDescription {
+      margin-bottom: 1.25rem;
+      font-size: 0.875rem;
+      color: rgba($textColor, 0.8);
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .discountProductActions {
+      display: flex;
+      gap: 0.5rem;
+
+      @media (max-width: $breakpointSm) {
+        flex-direction: column;
+      }
+
+      .discountDetailsButton {
+        background-color: transparent;
+        color: $primaryColor;
+        border: 2px solid $primaryColor;
+        border-radius: 50px;
+        padding: 0.5rem 1.5rem;
+        font-weight: 600;
+        font-size: 0.875rem;
+        cursor: pointer;
+        align-self: flex-start;
+        transition: all $transitionDuration ease;
+        margin-top: auto;
+
+        &:hover {
+          background-color: $primaryColor;
+          color: $lightTextColor;
+        }
+      }
+    }
+  }
+}
+
+.discountModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba($darkBackgroundColor, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.discountModalContent {
+  background-color: $lightTextColor;
+  border-radius: $borderRadius;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: scaleIn 0.3s ease;
+  box-shadow: $boxShadow;
+
+  .discountCloseButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba($darkBackgroundColor, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: $darkBackgroundColor;
+    transition: all $transitionDuration ease;
+    z-index: 10;
+
+    &:hover {
+      background-color: $primaryColor;
+      color: $lightTextColor;
+    }
+    i {
+      display: flex;
+    }
+  }
+
+  .discountModalHeader {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba($textColor, 0.1);
+
+    .discountModalBadge {
+      display: inline-block;
+      margin-bottom: 0.75rem;
+
+      .discountModalPercentage {
+        background-color: $primaryColor;
+        color: $lightTextColor;
+        padding: 0.4rem 1.2rem;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        box-shadow: $boxShadow;
+      }
+    }
+
+    .discountModalTitle {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: $primaryColor;
+      margin-bottom: 0.5rem;
+
+      @media (max-width: $breakpointMd) {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: $breakpointMd) {
+      padding: 1.25rem 1.5rem;
+    }
+  }
+
+  .discountModalBody {
+    display: flex;
+    padding: 2rem;
+
+    @media (max-width: $breakpointLg) {
+      flex-direction: column;
+      padding: 1.5rem;
+    }
+
+    .discountModalImageWrapper {
+      flex: 0 0 40%;
+      margin-right: 2rem;
+
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: $borderRadius;
+        box-shadow: $boxShadow;
+      }
+
+      @media (max-width: $breakpointLg) {
+        margin-right: 0;
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    .discountModalInfo {
+      flex: 1;
+
+      .discountModalDescription {
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        color: $textColor;
+        font-size: 0.9rem;
+      }
+
+      .discountModalFeatures {
+        margin-bottom: 1.5rem;
+
+        h4 {
+          font-size: 1.125rem;
+          margin-bottom: 0.75rem;
+          color: $darkBackgroundColor;
+          font-weight: 600;
+        }
+
+        ul {
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+
+            &:before {
+              content: "";
+              position: absolute;
+              left: 0;
+              top: 50%;
+              transform: translateY(-50%);
+              width: 0.75rem;
+              height: 0.75rem;
+              background-color: $primaryLightColor;
+              border: 2px solid $primaryColor;
+              border-radius: 50%;
+            }
+          }
+        }
+      }
+
+      .discountModalPrice {
+        margin-bottom: 1.5rem;
+
+        .discountModalPriceWrapper {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 0.4rem;
+
+          .discountModalOriginalPrice {
+            font-size: 0.9rem;
+            color: rgba($textColor, 0.6);
+            text-decoration: line-through;
+            font-weight: 500;
+          }
+
+          .discountModalDiscountedPrice {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: $primaryColor;
+          }
+        }
+
+        .discountModalSavings {
+          font-size: 0.9rem;
+          color: $textColor;
+          font-weight: 600;
+        }
+      }
+
+      .discountModalOrderButton {
+        background-color: $primaryColor;
+        color: $lightTextColor;
+        border: none;
+        border-radius: 50px;
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all $transitionDuration ease;
+        width: 100%;
+
+        &:hover {
+          background-color: $primaryDarkColor;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 15px rgba($primaryColor, 0.3);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+
+        @media (max-width: $breakpointSm) {
+          padding: 0.65rem 1.5rem;
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}

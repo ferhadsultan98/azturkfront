@@ -1,0 +1,214 @@
+$primary-color: #b72d44;
+$secondary-color: #ffffff;
+$accent-color: #f5f6f5;
+$text-color: #333333;
+$scroll-bg: #ffffff;
+button {
+  font-family: "Montserrat", sans-serif;
+}
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: transparent;
+  transition: all 0.3s ease;
+  z-index: 7;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgb(178, 178, 178);
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.33);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.9px);
+  -webkit-backdrop-filter: blur(6.9px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  &.scrolled {
+    background: $scroll-bg;
+    padding: 0.8rem 0;
+    transition: 0.5s;
+
+    .logo {
+      transition: 0.5s;
+      img {
+        width: 160px;
+        transition: 0.5s;
+      }
+    }
+  }
+
+  .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 5px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    max-height: 80px;
+
+    img {
+      height: 100%;
+      transition: 0.5s;
+      width: 200px;
+      filter: drop-shadow(1px 1px 4px white);
+    }
+  }
+
+  .productButton {
+    position: relative;
+    overflow: hidden;
+    height: 2.5rem;
+    padding: 0 1.5rem;
+    border-radius: 1.25rem;
+    background: transparent;
+    background-size: 400%;
+    color: $primary-color;
+    border: 1px solid #fff;
+    cursor: pointer;
+    color: #fff;
+    font-size: 0.9rem;
+
+    &.scrolled {
+      color: #b72d44;
+      border: 1px solid #b72d44;
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    &:hover::before {
+      transform: scaleX(1);
+    }
+
+    .productButtonContent {
+      position: relative;
+      z-index: 1;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: scaleX(0);
+      transform-origin: 0 50%;
+      width: 100%;
+      height: inherit;
+      border-radius: inherit;
+      background: linear-gradient($primary-color);
+      transition: all 0.475s;
+    }
+  }
+
+  .language-selector {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .language-option {
+    padding: 0.4rem 0.8rem;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    background: none;
+    font-weight: 500;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    &.active {
+      background: $primary-color;
+      color: #fff;
+      transform: scale(1.1);
+      border: 1px solid #fff;
+    }
+
+    &.scrolled {
+      color: #b72d44;
+      &.active {
+        background: #fff;
+        color: $primary-color;
+        border: 1px solid $primary-color;
+      }
+      &:hover {
+        background: rgba(183, 45, 68, 0.1);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem 0;
+
+    &.scrolled {
+      padding: 0.75rem 0;
+    }
+
+    .header-container {
+      padding: 0 1rem;
+    }
+
+    .productButton {
+      height: 2.2rem;
+      padding: 0 1.2rem;
+      border-radius: 1.1rem;
+      font-size: 0.8rem;
+    }
+
+    .language-option {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.8rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .logo {
+      img {
+        width: 120px !important;
+      }
+    }
+
+    .header-container {
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .header-right {
+      gap: 0.5rem;
+    }
+
+    .productButton {
+      height: 2rem;
+      padding: 0 1rem;
+      border-radius: 1rem;
+      font-size: 0.7rem;
+    }
+
+    .language-option {
+      padding: 0.2rem 0.5rem;
+      color: #b72d44;
+      font-size: 0.7rem;
+    }
+  }
+}

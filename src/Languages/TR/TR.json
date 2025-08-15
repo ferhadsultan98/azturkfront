@@ -1,0 +1,61 @@
+{
+  "header": {
+    "products": "Tüm Ürünler"
+  },
+  "home": {
+    "title": "Temiz ve Güvenilir Temizlik Ürünleri",
+    "description": "Azturk Package ile çevre dostu ve yüksek etkili temizlik ürünleri kullanarak evinizde ve iş yerinizde sağlıklı, temiz bir ortam yaratın. Doğayı ve sağlığı koruyun!",
+    "waMessages": "Merhaba, Temizlik ürünleri hakkında bilgi almak istiyorum. Lütfen detaylı bilgi veriniz. Teşekkürler!",
+    "cleaningslide1.title": "Temizlik Ürünleri",
+    "cleaningslide1.description": "Günlük kullanım için etkili temizlik çözümleri.",
+
+    "packingslide2.title": "Paketleme Ürünleri",
+    "packingslide2.description": "Ürünleriniz için pratik paketleme çözümleri.",
+
+    "cleaningslide3.title": "Temizlik Ürünleri",
+    "cleaningslide3.description": "Günlük kullanım için etkili temizlik çözümleri.",
+
+    "packingslide4.title": "Paketleme Ürünleri",
+    "packingslide4.description": "Ürünleriniz için pratik paketleme çözümleri.",
+
+    "cleaningslide5.title": "Temizlik Ürünleri",
+    "cleaningslide5.description": "Günlük kullanım için etkili temizlik çözümleri.",
+
+    "packingslide6.title": "Paketleme Ürünleri",
+    "packingslide6.description": "Ürünleriniz için pratik paketleme çözümleri.",
+    "slogan": "Kalite Her Şeyden Önce Gelir"
+  },
+  "menu": {
+    "packagingTitle": "Paketleme",
+    "cleaningTitle": "Temizlik",
+    "searchPlaceholder": "Ürün Ara",
+    "errorTitle": "Hata",
+    "errorDesc": "Ürünler yüklenemedi. Lütfen tekrar deneyin.",
+    "noResultsTitle": "Ürün bulunamadı",
+    "noResultsDesc": "Aramayı değiştirin veya başka bir kategori seçin.",
+    "featuresTitle": "Özellikler:",
+    "priceLabel": "Fiyat:",
+    "orderButton": "Sipariş Ver",
+    "allCategories": "Tüm Kategoriler",
+    "cleaningSubtitle": "Temizlik Ürünleri",
+    "packagingSubtitle": "Paketleme Ürünleri",
+    "detailsButton": "Detaylı Bilgi"
+  },
+
+  "about": {
+    "subtitle": "Hakkımızda",
+    "title": "Temizliğin Yeni Standardı",
+    "mission_title": "Misyonumuz",
+    "mission_description": "25 yılı aşkın süredir çeşitli sektörlerde faaliyet gösteren bir şirketler grubu olarak, 2023 yılından itibaren AzTurk Ltd. Şti. adıyla temizlik ve tek kullanımlık ambalaj alanında da hizmet vermekteyiz. Azerbaycan'da birçok ünlü markanın ithalatçısı olan şirketimiz, bu alanda 'Kalite Her Şeyden Önce Gelir' ilkesine dayanarak faaliyet göstermektedir. Amacımız, temizlik ve tek kullanımlık ambalaj ürünlerini hizmetlerinde kullanan otel, restoran, catering gibi sektörler için çevre dostu, profesyonel ve kaliteli ürünler sunmaktır. HoReCa bölümüyle birlikte ofis, şirket ve evler için de uygun fiyatlarla kaliteli ürünler sunabiliyoruz."
+  },
+  "discount": {
+    "badge": "Büyük İndirim",
+    "title": "Temizlik ve Paketleme Ürünlerinde",
+    "subtitle": "Büyük indirim!"
+  },
+  "footer": {
+    "description": "AZTURK PACKAGE MMC — kaliteli ve çevre dostu temizlik ile tek kullanımlık ambalaj ürünlerinde güvenilir iş ortağınız.",
+    "adress": "Tebriz Caddesi 2, Narimanov Bölgesi, Bakü (Eurohome)",
+    "connect": "Bizimle iletişime geçin"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "header": {
+    "products": "All Products"
+  },
+  "home": {
+    "title": "Clean and Reliable Cleaning Products",
+    "description": "With Azturk Package, use eco-friendly and highly effective cleaning products to create a healthy, clean environment in your home and workplace. Protect nature and health!",
+    "waMessages": "Hello, I would like to get information about cleaning products. Please provide detailed information. Thank you!",
+    "cleaningslide1.title": "Cleaning Products",
+    "cleaningslide1.description": "Effective cleaning solutions for daily use.",
+
+    "packingslide2.title": "Packaging Products",
+    "packingslide2.description": "Practical packaging solutions for your products.",
+
+    "cleaningslide3.title": "Cleaning Products",
+    "cleaningslide3.description": "Effective cleaning solutions for daily use.",
+
+    "packingslide4.title": "Packaging Products",
+    "packingslide4.description": "Practical packaging solutions for your products.",
+
+    "cleaningslide5.title": "Cleaning Products",
+    "cleaningslide5.description": "Effective cleaning solutions for daily use.",
+
+    "packingslide6.title": "Packaging Products",
+    "packingslide6.description": "Practical packaging solutions for your products.",
+    "slogan": "Quality Comes First"
+  },
+  "about": {
+    "subtitle": "About Us",
+    "title": "The New Standard of Cleanliness",
+    "mission_title": "Our Mission",
+    "mission_description": "With over 25 years of experience in various sectors, since 2023 we have also been operating under the name AzTurk LLC in the field of cleaning and disposable packaging. As the importer of many well-known brands in Azerbaijan, our company operates based on the principle that 'Quality Comes First.' Our mission is to provide eco-friendly, professional, and high-quality products for hotels, restaurants, catering services, and other sectors that use cleaning and disposable packaging products. Along with the HoReCa segment, we also offer quality products at affordable prices for offices, companies, and households."
+  },
+  "menu": {
+    "packagingTitle": "Packaging",
+    "cleaningTitle": "Cleaning",
+    "searchPlaceholder": "Search Product",
+    "errorTitle": "Error",
+    "errorDesc": "Failed to load products. Please try again.",
+    "noResultsTitle": "No Product Found",
+    "noResultsDesc": "Change the search or select another category.",
+    "featuresTitle": "Features:",
+    "priceLabel": "Price:",
+    "orderButton": "Order Now",
+    "allCategories": "All Categories",
+    "cleaningSubtitle": "Cleaning Products",
+    "packagingSubtitle": "Packaging Products",
+    "detailsButton": "More Info"
+  },
+  "discount": {
+    "badge": "Big Discount",
+    "title": "On Cleaning and Packaging Products",
+    "subtitle": "Huge discount!"
+  },
+  "footer": {
+    "description": "AZTURK PACKAGE MMC — your reliable partner for quality and eco-friendly cleaning and disposable packaging products.",
+    "adress": "Tebriz Street 2, Narimanov District, Baku (Eurohome)",
+    "connect": "Contact us"
+  }
+}

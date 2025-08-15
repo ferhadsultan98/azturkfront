@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tədarük - Satınalma Tələb Sistemi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .form-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .form-section h2 {
+            color: #2a5298;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #2a5298;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 3px rgba(42,82,152,0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        select.form-control {
+            cursor: pointer;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .send-to-section {
+            position: relative;
+        }
+
+        .selected-recipients {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+            min-height: 40px;
+            padding: 10px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+        }
+
+        .recipient-tag {
+            background: #2a5298;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .recipient-tag .remove {
+            background: rgba(255,255,255,0.3);
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .autocomplete-item {
+            padding: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s;
+        }
+
+        .autocomplete-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type=file] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 12px;
+            border: 2px dashed #2a5298;
+            border-radius: 8px;
+            text-align: center;
+            color: #2a5298;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload-label:hover {
+            background-color: rgba(42,82,152,0.1);
+        }
+
+        .attached-files {
+            margin-top: 10px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 5px;
+        }
+
+        .file-item .remove-file {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42,82,152,0.4);
+        }
+
+        .history-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .history-section h2 {
+            color: #2a5298;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid #2a5298;
+            padding-bottom: 10px;
+        }
+
+        .history-item {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .history-item:hover {
+            border-color: #2a5298;
+            box-shadow: 0 3px 10px rgba(42,82,152,0.2);
+        }
+
+        .history-item h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .history-item .date {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .history-item .amount {
+            color: #2a5298;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status.approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status.quoted {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .status.ordered {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status.received {
+            background: #c3e6cb;
+            color: #155724;
+        }
+
+        .priority {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .priority.low {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .priority.medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .priority.high {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .priority.urgent {
+            background: #721c24;
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .modal-header h3 {
+            color: #2a5298;
+            margin: 0;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            width: 150px;
+            color: #333;
+        }
+
+        .detail-value {
+            flex: 1;
+            color: #666;
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .items-table th,
+        .items-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .items-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .budget-info {
+            background: #e9f4ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #2a5298;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .form-section, .history-section {
+                padding: 20px;
+            }
+            
+            .form-row, .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+                padding: 20px;
+            }
+            
+            .detail-row {
+                flex-direction: column;
+            }
+            
+            .detail-label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Tədarük Sistemi</h1>
+            <p>Satınalma Tələb və İdarəetmə Sistemi</p>
+        </div>
+
+        <div class="main-content">
+            <div class="form-section">
+                <h2>Yeni Satınalma Tələbi</h2>
+                
+                <form id="procurementForm">
+                    <div class="form-group">
+                        <label for="requestType">Tələb Növü:</label>
+                        <select id="requestType" class="form-control" required>
+                            <option value="">Tələb növünü seçin</option>
+                            <option value="office_supplies">Ofis Ləvazimatı</option>
+                            <option value="it_equipment">İT Avadanlıqları</option>
+                            <option value="furniture">Mebel və Təchizat</option>
+                            <option value="maintenance">Təmir və Baxım</option>
+                            <option value="marketing">Marketinq Materialları</option>
+                            <option value="software">Proqram Təminatı</option>
+                            <option value="services">Xidmətlər</option>
+                            <option value="raw_materials">Xam Material</option>
+                            <option value="other">Digər</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="priority">Prioritet:</label>
+                            <select id="priority" class="form-control" required>
+                                <option value="">Prioritet seçin</option>
+                                <option value="low">Aşağı</option>
+                                <option value="medium">Orta</option>
+                                <option value="high">Yüksək</option>
+                                <option value="urgent">Təcili</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="requiredDate">Tələb olunan tarix:</label>
+                            <input type="date" id="requiredDate" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="department">Departament:</label>
+                            <select id="department" class="form-control" required>
+                                <option value="">Departament seçin</option>
+                                <option value="it">İnformasiya Texnologiyaları</option>
+                                <option value="finance">Maliyyə</option>
+                                <option value="hr">İnsan Resursları</option>
+                                <option value="marketing">Marketinq</option>
+                                <option value="operations">Əməliyyat</option>
+                                <option value="procurement">Tədarük</option>
+                                <option value="legal">Hüquq</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="budgetCode">Büdcə Kodu:</label>
+                            <input type="text" id="budgetCode" class="form-control" placeholder="Məs: BDG-2025-001">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="itemDescription">Məhsul/Xidmət Təsviri:</label>
+                        <textarea id="itemDescription" class="form-control" placeholder="Tələb olunan məhsul və ya xidmətin ətraflı təsvirini yazın..." required></textarea>
+                    </div>
+
+                    <div class="form-row-3">
+                        <div class="form-group">
+                            <label for="quantity">Miqdar:</label>
+                            <input type="number" id="quantity" class="form-control" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="unit">Ölçü vahidi:</label>
+                            <select id="unit" class="form-control" required>
+                                <option value="">Vahid seçin</option>
+                                <option value="piece">Ədəd</option>
+                                <option value="kg">Kiloqram</option>
+                                <option value="liter">Litr</option>
+                                <option value="meter">Metr</option>
+                                <option value="pack">Paket</option>
+                                <option value="box">Qutu</option>
+                                <option value="set">Dəst</option>
+                                <option value="hour">Saat</option>
+                                <option value="month">Ay</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="estimatedPrice">Təxmini qiymət (AZN):</label>
+                            <input type="number" id="estimatedPrice" class="form-control" step="0.01" min="0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="supplier">Təklif olunan təchizatçı (isteğe bağlı):</label>
+                        <input type="text" id="supplier" class="form-control" placeholder="Şirkət adı">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="justification">Alış səbəbi və əsaslandırma:</label>
+                        <textarea id="justification" class="form-control" placeholder="Bu satınalmanın zəruriliyini əsaslandırın..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="approvers">Təsdiqləyənlər:</label>
+                        <div class="send-to-section">
+                            <input type="text" id="approvers" class="form-control" placeholder="Ad və soyad yazın..." autocomplete="off">
+                            <div class="autocomplete-dropdown" id="autocompleteDropdown"></div>
+                        </div>
+                        <div class="selected-recipients" id="selectedApprovers">
+                            <span style="color: #999; font-size: 14px;">Heç kim seçilməyib</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sənədlər əlavə edin (PDF, DOCX, XLSX):</label>
+                        <div class="file-upload">
+                            <input type="file" id="fileUpload" accept=".pdf,.docx,.xlsx" multiple>
+                            <label for="fileUpload" class="file-upload-label">
+                                📎 Faylları seçin və ya bura sürükləyin
+                            </label>
+                        </div>
+                        <div class="attached-files" id="attachedFiles"></div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Satınalma Tələbini Göndər</button>
+                </form>
+            </div>
+
+            <div class="history-section">
+                <h2>Tələb Tarixçəsi</h2>
+                <div id="historyList">
+                    <div class="history-item" onclick="showDetails(1)">
+                        <h4>İT Avadanlıqları</h4>
+                        <div class="date">15 Avqust 2025</div>
+                        <div class="amount">5,500 AZN</div>
+                        <span class="status pending">Gözləmədə</span>
+                        <span class="priority high">Yüksək</span>
+                    </div>
+                    <div class="history-item" onclick="showDetails(2)">
+                        <h4>Ofis Ləvazimatı</h4>
+                        <div class="date">12 Avqust 2025</div>
+                        <div class="amount">320 AZN</div>
+                        <span class="status approved">Təsdiqləndi</span>
+                        <span class="priority medium">Orta</span>
+                    </div>
+                    <div class="history-item" onclick="showDetails(3)">
+                        <h4>Proqram Təminatı</h4>
+                        <div class="date">8 Avqust 2025</div>
+                        <div class="amount">12,000 AZN</div>
+                        <span class="status quoted">Qiymət alındı</span>
+                        <span class="priority urgent">Təcili</span>
+                    </div>
+                    <div class="history-item" onclick="showDetails(4)">
+                        <h4>Mebel</h4>
+                        <div class="date">5 Avqust 2025</div>
+                        <div class="amount">2,800 AZN</div>
+                        <span class="status ordered">Sifariş verildi</span>
+                        <span class="priority low">Aşağı</span>
+                    </div>
+                    <div class="history-item" onclick="showDetails(5)">
+                        <h4>Marketinq Materialları</h4>
+                        <div class="date">1 Avqust 2025</div>
+                        <div class="amount">1,500 AZN</div>
+                        <span class="status received">Təhvil alındı</span>
+                        <span class="priority medium">Orta</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Tələb Detalları</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div id="modalBody">
+                <!-- Detallar buraya yüklənəcək -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Statik işçi məlumatları (təsdiqləyənlər)
+        const approvers = [
+            { name: "Rəşad", surname: "Həsənov", position: "Maliyyə Direktoru", department: "Maliyyə" },
+            { name: "Səbinə", surname: "Əliyeva", position: "Baş Mühasib", department: "Maliyyə" },
+            { name: "Elxan", surname: "Rəhimov", position: "İT Direktoru", department: "İT" },
+            { name: "Leyla", surname: "Quliyeva", position: "Satınalma Meneceri", department: "Tədarük" },
+            { name: "Fərid", surname: "Nəbiyev", position: "Əməliyyat Direktoru", department: "Əməliyyat" },
+            { name: "Günel", surname: "İsmayılova", position: "İR Direktoru", department: "İR" },
+            { name: "Mətin", surname: "Şərifov", position: "Hüquq Məsləhətçisi", department: "Hüquq" },
+            { name: "Aynur", surname: "Babayeva", position: "Departament Rəhbəri", department: "Marketinq" }
+        ];
+
+        // Seçilmiş təsdiqləyənlər
+        let selectedApprovers = [];
+        let attachedFiles = [];
+
+        // DOM elementləri
+        const approversInput = document.getElementById('approvers');
+        const autocompleteDropdown = document.getElementById('autocompleteDropdown');
+        const selectedApproversDiv = document.getElementById('selectedApprovers');
+        const fileUpload = document.getElementById('fileUpload');
+        const attachedFilesDiv = document.getElementById('attachedFiles');
+
+        // Bu günün tarixini minimum tarix olaraq təyin et
+        document.getElementById('requiredDate').min = new Date().toISOString().split('T')[0];
+
+        // Avtomatik tamamlama
+        approversInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            
+            if (query.length === 0) {
+                hideAutocomplete();
+                return;
+            }
+
+            const filteredApprovers = approvers.filter(emp => 
+                emp.name.toLowerCase().includes(query) || 
+                emp.surname.toLowerCase().includes(query) ||
+                emp.position.toLowerCase().includes(query)
+            );
+
+            if (filteredApprovers.length > 0) {
+                showAutocomplete(filteredApprovers);
+            } else {
+                hideAutocomplete();
+            }
+        });
+
+        function showAutocomplete(approverList) {
+            autocompleteDropdown.innerHTML = '';
+            approverList.forEach(emp => {
+                const item = document.createElement('div');
+                item.className = 'autocomplete-item';
+                item.innerHTML = `<strong>${emp.name} ${emp.surname}</strong> - ${emp.position} (${emp.department})`;
+                item.addEventListener('click', () => selectApprover(emp));
+                autocompleteDropdown.appendChild(item);
+            });
+            autocompleteDropdown.style.display = 'block';
+        }
+
+        function hideAutocomplete() {
+            autocompleteDropdown.style.display = 'none';
+        }
+
+        function selectApprover(approver) {
+            // Təkrarlanmanı yoxla
+            const isAlreadySelected = selectedApprovers.some(selected => 
+                selected.name === approver.name && selected.surname === approver.surname
+            );
+
+            if (!isAlreadySelected) {
+                selectedApprovers.push(approver);
+                updateSelectedApprovers();
+            }
+
+            approversInput.value = '';
+            hideAutocomplete();
+        }
+
+        function updateSelectedApprovers() {
+            selectedApproversDiv.innerHTML = '';
+            
+            if (selectedApprovers.length === 0) {
+                selectedApproversDiv.innerHTML = '<span style="color: #999; font-size: 14px;">Heç kim seçilməyib</span>';
+                return;
+            }
+
+            selectedApprovers.forEach((approver, index) => {
+                const tag = document.createElement('div');
+                tag.className = 'recipient-tag';
+                tag.innerHTML = `
+                    ${approver.name} ${approver.surname} - ${approver.position}
+                    <button class="remove" onclick="removeApprover(${index})">&times;</button>
+                `;
+                selectedApproversDiv.appendChild(tag);
+            });
+        }
+
+        function removeApprover(index) {
+            selectedApprovers.splice(index, 1);
+            updateSelectedApprovers();
+        }
+
+        // Fayl yükləmə
+        fileUpload.addEventListener('change', function() {
+            const files = Array.from(this.files);
+            files.forEach(file => {
+                const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+                if (validTypes.includes(file.type)) {
+                    attachedFiles.push(file);
+                } else {
+                    alert('Yalnız PDF, DOCX və XLSX faylları qəbul edilir!');
+                }
+            });
+            updateAttachedFiles();
+            this.value = '';
+        });
+
+        function updateAttachedFiles() {
+            attachedFilesDiv.innerHTML = '';
+            attachedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                let icon = '📄';
+                if (file.type.includes('pdf')) icon = '📕';
+                if (file.type.includes('spreadsheet')) icon = '📊';
+                
+                fileItem.innerHTML = `
+                    <span>${icon} ${file.name}</span>
+                    <button class="remove-file" onclick="removeFile(${index})">&times;</button>
+                `;
+                attachedFilesDiv.appendChild(fileItem);
+            });
+        }
+
+        function removeFile(index) {
+            attachedFiles.splice(index, 1);
+            updateAttachedFiles();
+        }
+
+        // Form göndərmə
+        document.getElementById('procurementForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                requestType: document.getElementById('requestType').value,
+                priority: document.getElementById('priority').value,
+                requiredDate: document.getElementById('requiredDate').value,
+                department: document.getElementById('department').value,
+                budgetCode: document.getElementById('budgetCode').value,
+                itemDescription: document.getElementById('itemDescription').value,
+                quantity: document.getElementById('quantity').value,
+                unit: document.getElementById('unit').value,
+                estimatedPrice: document.getElementById('estimatedPrice').value,
+                                supplier: document.getElementById('supplier').value,
+                justification: document.getElementById('justification').value,
+                approvers: selectedApprovers,
+                files: attachedFiles
+            };
+
+            // Form validation
+            if (!formData.requestType || !formData.priority || !formData.requiredDate || 
+                !formData.department || !formData.itemDescription || !formData.quantity || 
+                !formData.unit || !formData.justification) {
+                alert('Zəhmət olmasa bütün tələb olunan sahələri doldurun!');
+                return;
+            }
+
+            if (formData.approvers.length === 0) {
+                alert('Ən azı bir təsdiqləyici seçilməlidir!');
+                return;
+            }
+
+            // Simulate form submission (replace with actual API call)
+            console.log('Form submitted:', formData);
+            alert('Satınalma tələbi uğurla göndərildi!');
+
+            // Reset form
+            this.reset();
+            selectedApprovers = [];
+            attachedFiles = [];
+            updateSelectedApprovers();
+            updateAttachedFiles();
+        });
+
+        // Modal functions
+        function showDetails(requestId) {
+            // Sample data for demonstration (replace with actual data fetch)
+            const requestDetails = {
+                1: {
+                    type: 'İT Avadanlıqları',
+                    date: '15 Avqust 2025',
+                    amount: '5,500 AZN',
+                    status: 'Gözləmədə',
+                    priority: 'Yüksək',
+                    department: 'İnformasiya Texnologiyaları',
+                    budgetCode: 'BDG-2025-001',
+                    description: '2 ədəd yeni server və 10 ədəd iş stansiyası',
+                    quantity: '12',
+                    unit: 'Ədəd',
+                    estimatedPrice: '5500',
+                    supplier: 'Tech Solutions LLC',
+                    justification: 'Mövcud serverlərin tutumu artıq kifayət etmir.',
+                    approvers: [
+                        { name: 'Elxan Rəhimov', position: 'İT Direktoru' },
+                        { name: 'Rəşad Həsənov', position: 'Maliyyə Direktoru' }
+                    ],
+                    files: ['server_specs.pdf', 'quote.xlsx']
+                },
+                2: {
+                    type: 'Ofis Ləvazimatı',
+                    date: '12 Avqust 2025',
+                    amount: '320 AZN',
+                    status: 'Təsdiqləndi',
+                    priority: 'Orta',
+                    department: 'Maliyyə',
+                    budgetCode: 'BDG-2025-002',
+                    description: '50 ədəd qələm, 20 ədəd dəftər',
+                    quantity: '70',
+                    unit: 'Ədəd',
+                    estimatedPrice: '320',
+                    supplier: 'Office Supplies Co.',
+                    justification: 'Ofis ehtiyacları üçün ləvazimat yenilənməsi.',
+                    approvers: [
+                        { name: 'Səbinə Əliyeva', position: 'Baş Mühasib' }
+                    ],
+                    files: ['order_list.pdf']
+                },
+                // Add more sample data as needed
+            };
+
+            const details = requestDetails[requestId] || {};
+            
+            // Populate modal content
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="detail-row">
+                    <div class="detail-label">Tələb Növü:</div>
+                    <div class="detail-value">${details.type || '-'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Tarix:</div>
+                    <div class="detail-value">${details.date || '-'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Məbləğ:</div>
+                    <div class="detail-value">${details.amount || '-'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Status:</div>
+                    <div class="detail-value">
+                        <span class="status ${details.status?.toLowerCase().replace(' ', '')}">
+                            ${details.status || '-'}
+                        </span>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Prioritet:</div>
+                    <div class="detail-value">
+                        <span class="priority ${details.priority?.toLowerCase()}">
+                            ${details.priority || '-'}
+                        </span>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Departament:</div>
+                    <div class="detail-value">${details.department || '-'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Büdcə Kodu:</div>
+                    <div class="detail-value">${details.budgetCode || '-'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Təsvir:</div>
+                    <div class="detail-value">${details.description || '-'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Miqdar:</div>
+                    <div class="detail-value">${details.quantity || '-'} ${details.unit || ''}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Təxmini Qiymət:</div>
+                    <div class="detail-value">${details.estimatedPrice || '-'} AZN</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Təchizatçı:</div>
+                    <div class="detail-value">${details.supplier || '-'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Əsaslandırma:</div>
+                    <div class="detail-value">${details.justification || '-'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Təsdiqləyənlər:</div>
+                    <div class="detail-value">
+                        ${details.approvers?.map(a => `${a.name} (${a.position})`).join(', ') || '-'}
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Əlavə edilmiş fayllar:</div>
+                    <div class="detail-value">
+                        ${details.files?.map(file => `<div>${file}</div>`).join('') || 'Yoxdur'}
+                    </div>
+                </div>
+            `;
+
+            // Show budget info
+            const budgetInfo = document.createElement('div');
+            budgetInfo.className = 'budget-info';
+            budgetInfo.innerHTML = `
+                <strong>Büdcə Məlumatı:</strong><br>
+                Qalan büdcə: 25,000 AZN<br>
+                İllik büdcə: 100,000 AZN<br>
+                İstifadə edilmiş: 75,000 AZN
+            `;
+            modalBody.appendChild(budgetInfo);
+
+            // Show modal
+            document.getElementById('modalTitle').textContent = `Tələb #${requestId} Detalları`;
+            document.getElementById('detailModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('detailModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Form input validation
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value) {
+                    this.classList.add('filled');
+                } else {
+                    this.classList.remove('filled');
+                }
+            });
+        });
+
+        // Drag and drop file upload
+        const fileUploadArea = document.querySelector('.file-upload');
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            fileUploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            fileUploadArea.addEventListener(eventName, () => {
+                fileUploadArea.classList.add('highlight');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            fileUploadArea.addEventListener(eventName, () => {
+                fileUploadArea.classList.remove('highlight');
+            }, false);
+        });
+
+        fileUploadArea.addEventListener('drop', function(e) {
+            const files = Array.from(e.dataTransfer.files);
+            files.forEach(file => {
+                const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+                if (validTypes.includes(file.type)) {
+                    attachedFiles.push(file);
+                } else {
+                    alert('Yalnız PDF, DOCX və XLSX faylları qəbul edilir!');
+                }
+            });
+            updateAttachedFiles();
+        });
+
+        // Add CSS for drag and drop highlight
+        const style = document.createElement('style');
+        style.textContent = `
+            .file-upload.highlight .file-upload-label {
+                background-color: rgba(42,82,152,0.2);
+                border-color: #1e3c72;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

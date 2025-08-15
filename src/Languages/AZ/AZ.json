@@ -1,0 +1,61 @@
+{
+  "header": {
+    "products": "Bütün Məhsullar"
+  },
+  "home": {
+    "title": "Təmiz və Etibarlı Təmizlik Məhsulları",
+    "description": "Azturk Package ilə ekoloji təmiz və yüksək effektiv təmizlik məhsulları istifadə edərək, evinizdə və iş yerinizdə sağlam, təmiz bir mühit yaradın. Təbiəti və sağlamlığı qoruyun!",
+    "waMessages": "Salam, Təmizlik məhsulları haqqında məlumat almaq istəyirəm. Xahiş edirəm ətraflı məlumat verəsiniz. Təşəkkürlər!",
+
+    "cleaningslide1.title": "Təmizlik Məhsulları",
+    "cleaningslide1.description": "Gündəlik istifadə üçün effektiv təmizlik vasitələri.",
+
+    "packingslide2.title": "Paketləmə Məhsulları",
+    "packingslide2.description": "Məhsullar üçün praktiki qablaşdırma həlləri.",
+
+    "cleaningslide3.title": "Təmizlik Məhsulları",
+    "cleaningslide3.description": "Gündəlik istifadə üçün effektiv təmizlik vasitələri.",
+
+    "packingslide4.title": "Paketləmə Məhsulları",
+    "packingslide4.description": "Məhsullar üçün praktiki qablaşdırma həlləri.",
+
+    "cleaningslide5.title": "Təmizlik Məhsulları",
+    "cleaningslide5.description": "Gündəlik istifadə üçün effektiv təmizlik vasitələri.",
+
+    "packingslide6.title": "Paketləmə Məhsulları",
+    "packingslide6.description": "Məhsullar üçün praktiki qablaşdırma həlləri.",
+    "slogan": "Keyfiyyət 1incidir"
+  },
+  "about": {
+    "subtitle": "Haqqımızda",
+    "title": "Təmizliyin Yeni Standartı",
+    "mission_title": "Bizim Missiyamız",
+    "mission_description": "25 ildən artıqdır müxtəlif sahələrdə fəaliyyət göstərən şirkətlər qrupu olaraq 2023-cü ildən AzTurk MMC adıyla təmizlik və birdəfəlik qablaşdırma sahəsində də fəaliyyət göstəririk. Bir çox məşhur markaların Azərbaycanda idxalçısı olan şirkətimiz bu sahədə özünün 'Keyfiyyət 1incidir' fikrini əsas götürərək fəaliyyət göstərir. Məqsədimiz öz xidmətində təmizlik və birdəfəlik qablaşdırma məhsullarından istifadə edən hotel, restoran, catering və s. sahələr üçün ekoloji təmiz, peşəkar və keyfiyyətli məhsullar təqdim etməkdir. HoReCa bölümüylə birlikdə ofis, şirkət və evlər üçün də keyfiyyətli məhsulu uyğun qiymətə təklif edə bilirik."
+  },
+  "menu": {
+    "packagingTitle": "Paketləmə",
+    "cleaningTitle": "Təmizlik",
+    "searchPlaceholder": "Məhsul Axtar",
+    "errorTitle": "Xəta",
+    "errorDesc": "Məhsullar yüklənmədi. Yenidən cəhd edin.",
+    "noResultsTitle": "Məhsul tapılmadı",
+    "noResultsDesc": "Axtarışı dəyişdirin və ya başqa kateqoriya seçin.",
+    "featuresTitle": "Xüsusiyyətlər:",
+    "priceLabel": "Qiymət:",
+    "orderButton": "Sifariş Et",
+    "allCategories": "Bütün Kateqoriyalar",
+    "cleaningSubtitle": "Təmizlik Məhsulları",
+    "packagingSubtitle": "Paketləmə məhsulları",
+    "detailsButton": "Ətraflı Məlumat"
+  },
+  "discount": {
+    "badge": "Böyük Endirim",
+    "title": "Təmizlik və Paketləmə Məhsullarında",
+    "subtitle": "Böyük endirim!"
+  },
+  "footer": {
+    "description": "AZTURK PACKAGE MMC — təmizlik və birdəfəlik qablaşdırma sahəsində keyfiyyətli və ekoloji məhsullar təqdim edən etibarlı tərəfdaşınız.",
+    "adress": "Bakı şəh. Nərimanov ray. Təbriz küç. 2 ( Eurohome )",
+    "connect": "Bizimlə əlaqə saxlayın"
+  }
+}

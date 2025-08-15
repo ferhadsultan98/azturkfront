@@ -1,0 +1,617 @@
+$primaryColor: #b72d44;
+$primaryLightColor: lighten(#b72d44, 35%);
+$primaryDarkColor: darken(#b72d44, 15%);
+$accentColor: #2db78a;
+$textColor: #333333;
+$lightTextColor: #ffffff;
+$darkBackgroundColor: #2c2c2c;
+$lightBackgroundColor: #f9f5f6;
+$borderRadius: 8px;
+$boxShadow: 0 4px 12px rgba(183, 45, 68, 0.12);
+$transitionDuration: 0.3s;
+
+$breakpointSm: 576px;
+$breakpointMd: 768px;
+$breakpointLg: 992px;
+$breakpointXl: 1200px;
+button {
+  font-family: "Montserrat", sans-serif;
+}
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+.cleaningServiceContainer {
+  font-family: "Poppins", sans-serif;
+  color: $textColor;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 7rem 1rem;
+  font-family: "Montserrat", sans-serif;
+
+  @media (max-width: $breakpointMd) {
+    padding: 1.5rem 0.75rem;
+  }
+}
+
+.sectionToggle {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  .sectionButton {
+    background-color: transparent;
+    color: $textColor;
+    border: 2px solid rgba($primaryColor, 0.2);
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all $transitionDuration ease;
+    outline: none;
+
+    &:hover {
+      background-color: rgba($primaryColor, 0.1);
+      border-color: rgba($primaryColor, 0.3);
+    }
+
+    &.active {
+      background-color: $primaryColor;
+      color: $lightTextColor;
+      border-color: $primaryColor;
+    }
+
+    @media (max-width: $breakpointSm) {
+      font-size: 0.875rem;
+      padding: 0.4rem 1rem;
+    }
+  }
+}
+
+.headerSection {
+  text-align: center;
+  margin-bottom: 3rem;
+
+  .mainTitle {
+    color: $primaryColor;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+
+    @media (max-width: $breakpointMd) {
+      font-size: 2rem;
+    }
+
+    @media (max-width: $breakpointSm) {
+      font-size: 1.75rem;
+    }
+  }
+
+  .subTitle {
+    color: $textColor;
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+
+    @media (max-width: $breakpointSm) {
+      font-size: 1rem;
+    }
+  }
+}
+
+.searchControlsWrapper {
+  margin: 2rem 0;
+
+  .searchInputWrapper {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+
+    .searchInput {
+      width: 100%;
+      padding: 1rem 3rem 1rem 1.5rem;
+      border: 2px solid rgba($primaryColor, 0.2);
+      border-radius: 50px;
+      font-size: 1rem;
+      transition: all $transitionDuration ease;
+
+      &:focus {
+        outline: none;
+        border-color: $primaryColor;
+        box-shadow: 0 0 0 3px rgba($primaryColor, 0.2);
+      }
+
+      &::placeholder {
+        color: rgba($textColor, 0.5);
+      }
+    }
+
+    .searchIcon {
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: $primaryColor;
+      font-size: 1.25rem;
+    }
+  }
+
+  .categorySliderContainer {
+    position: relative;
+    margin: 1.5rem auto 0;
+    padding: 0 3rem;
+
+    @media (max-width: $breakpointSm) {
+      padding: 0 2.5rem;
+    }
+
+    .sliderArrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2.5rem;
+      height: 2.5rem;
+      background: none;
+      border: 2px solid $primaryColor;
+      border-radius: 50%;
+      color: $primaryColor;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all $transitionDuration ease;
+      z-index: 4;
+
+      &:hover {
+        background-color: $primaryColor;
+        color: $lightTextColor;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      @media (max-width: $breakpointSm) {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+
+    .sliderArrowLeft {
+      left: 0;
+    }
+
+    .sliderArrowRight {
+      right: 0;
+    }
+
+    .categoryFilters {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 0.5rem 0;
+      gap: 0.75rem;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .categoryButton {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        background-color: transparent;
+        color: $textColor;
+        border: 2px solid rgba($primaryColor, 0.2);
+        border-radius: 50px;
+        padding: 0.5rem 1.25rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all $transitionDuration ease;
+
+        &:hover {
+          background-color: rgba($primaryColor, 0.1);
+          border-color: rgba($primaryColor, 0.3);
+        }
+
+        &.active {
+          background-color: $primaryColor;
+          color: $lightTextColor;
+          border-color: $primaryColor;
+        }
+
+        @media (max-width: $breakpointSm) {
+          font-size: 0.75rem;
+          padding: 0.4rem 1rem;
+        }
+      }
+    }
+  }
+}
+
+.categorySection {
+  margin-bottom: 3rem;
+
+  .categoryTitle {
+    color: $primaryColor;
+    font-size: 1.75rem;
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+    position: relative;
+    padding-left: 1rem;
+    border-left: 4px solid $primaryColor;
+
+    @media (max-width: $breakpointMd) {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+
+  @media (max-width: $breakpointMd) {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: $breakpointSm) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.productCard {
+  background-color: $lightTextColor;
+  border-radius: $borderRadius;
+  overflow: hidden;
+  box-shadow: $boxShadow;
+  transition: transform $transitionDuration ease,
+    box-shadow $transitionDuration ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20propx rgba($primaryColor, 0.15);
+  }
+
+  .productImageWrapper {
+    position: relative;
+    padding-top: 60%;
+    overflow: hidden;
+    background: url('/assets/minilogo.png') no-repeat center center / cover;
+    background-size: 90%;
+     border-bottom: 1px solid #b72d44;
+   
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    .productImage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transform: scale(1.05);
+      z-index: 2;
+    }
+  }
+
+  .productInfo {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    .productName {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: $darkBackgroundColor;
+    }
+
+    .productMeta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      .productPrice {
+        font-weight: 700;
+        color: $primaryColor;
+        font-size: 1.125rem;
+      }
+    }
+
+    .productDescription {
+      margin-bottom: 1.25rem;
+      font-size: 0.875rem;
+      color: rgba($textColor, 0.8);
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .detailsButton {
+      background-color: transparent;
+      color: $primaryColor;
+      border: 2px solid $primaryColor;
+      border-radius: 50px;
+      padding: 0.5rem 1.5rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: all $transitionDuration ease;
+      margin-top: auto;
+
+      &:hover {
+        background-color: $primaryColor;
+        color: $lightTextColor;
+      }
+    }
+  }
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba($darkBackgroundColor, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 8;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease;
+
+  .modalContent {
+    background-color: $lightTextColor;
+    border-radius: $borderRadius;
+    width: 100%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: scaleIn 0.3s ease;
+
+    .closeButton {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba($darkBackgroundColor, 0.1);
+      border: none;
+      border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: $darkBackgroundColor;
+      transition: all $transitionDuration ease;
+      z-index: 10;
+      i {
+        display: flex;
+      }
+      &:hover {
+        background-color: $primaryColor;
+        color: $lightTextColor;
+      }
+    }
+
+    .modalHeader {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba($textColor, 0.1);
+
+      .modalTitle {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: $primaryColor;
+        margin-bottom: 0.5rem;
+      }
+
+      @media (max-width: $breakpointMd) {
+        padding: 1.25rem 1.5rem;
+
+        .modalTitle {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    .modalBody {
+      display: flex;
+      padding: 2rem;
+
+      @media (max-width: $breakpointLg) {
+        flex-direction: column;
+        padding: 1.5rem;
+      }
+
+      .modalImageWrapper {
+        flex: 0 0 40%;
+        margin-right: 2rem;
+
+        img {
+          width: 100%;
+          height: auto;
+          border-radius: $borderRadius;
+          box-shadow: $boxShadow;
+        }
+
+        @media (max-width: $breakpointLg) {
+          margin-right: 0;
+          margin-bottom: 1.5rem;
+        }
+      }
+
+      .modalInfo {
+        flex: 1;
+
+        .modalDescription {
+          margin-bottom: 1.5rem;
+          line-height: 1.6;
+          color: $textColor;
+        }
+
+        .modalFeatures {
+          margin-bottom: 1.5rem;
+
+          h4 {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            color: $darkBackgroundColor;
+            font-weight: 600;
+          }
+
+          ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+              padding-left: 1.5rem;
+              position: relative;
+              margin-bottom: 0.5rem;
+
+              &:before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 0.75rem;
+                height: 0.75rem;
+                background-color: $primaryLightColor;
+                border: 2px solid $primaryColor;
+                border-radius: 50%;
+              }
+            }
+          }
+        }
+
+        .modalPrice {
+          margin-bottom: 1.5rem;
+
+          .priceLabel {
+            font-size: 1rem;
+            color: $textColor;
+          }
+
+          .priceValue {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: $primaryColor;
+            margin-left: 0.5rem;
+          }
+        }
+
+        .orderButton {
+          background-color: $primaryColor;
+          color: $lightTextColor;
+          border: none;
+          border-radius: 50px;
+          padding: 0.75rem 2rem;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all $transitionDuration ease;
+
+          &:hover {
+            background-color: $primaryDarkColor;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba($primaryColor, 0.3);
+          }
+
+          &:active {
+            transform: translateY(0);
+          }
+        }
+      }
+    }
+  }
+}
+
+.noResults {
+  text-align: center;
+  padding: 3rem 1rem;
+
+  h3 {
+    color: $primaryColor;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: rgba($textColor, 0.7);
+  }
+}
+
+.showMoreWrapper {
+  text-align: center;
+  margin-top: 2rem;
+
+  .showMoreButton {
+    background-color: $primaryColor;
+    color: $lightTextColor;
+    border: none;
+    border-radius: 50px;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all $transitionDuration ease;
+
+    &:hover {
+      background-color: $primaryDarkColor;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba($primaryColor, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

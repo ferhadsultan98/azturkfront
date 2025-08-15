@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İnsan Resursları - İzin Alma Sistemi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f4c75 0%, #3282b8 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .form-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .form-section h2 {
+            color: darkcyan;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid darkcyan;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: darkcyan;
+            box-shadow: 0 0 0 3px rgba(0,139,139,0.1);
+        }
+
+        select.form-control {
+            cursor: pointer;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .send-to-section {
+            position: relative;
+        }
+
+        .selected-recipients {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+            min-height: 40px;
+            padding: 10px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+        }
+
+        .recipient-tag {
+            background: darkcyan;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .recipient-tag .remove {
+            background: rgba(255,255,255,0.3);
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .autocomplete-item {
+            padding: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s;
+        }
+
+        .autocomplete-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type=file] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 12px;
+            border: 2px dashed darkcyan;
+            border-radius: 8px;
+            text-align: center;
+            color: darkcyan;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload-label:hover {
+            background-color: rgba(0,139,139,0.1);
+        }
+
+        .attached-files {
+            margin-top: 10px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 5px;
+        }
+
+        .file-item .remove-file {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, darkcyan 0%, #20b2aa 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,139,139,0.4);
+        }
+
+        .history-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .history-section h2 {
+            color: darkcyan;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            border-bottom: 3px solid darkcyan;
+            padding-bottom: 10px;
+        }
+
+        .history-item {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .history-item:hover {
+            border-color: darkcyan;
+            box-shadow: 0 3px 10px rgba(0,139,139,0.2);
+        }
+
+        .history-item h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .history-item .date {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status.approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .modal-header h3 {
+            color: darkcyan;
+            margin: 0;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            width: 150px;
+            color: #333;
+        }
+
+        .detail-value {
+            flex: 1;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .form-section, .history-section {
+                padding: 20px;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+                padding: 20px;
+            }
+            
+            .detail-row {
+                flex-direction: column;
+            }
+            
+            .detail-label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>İnsan Resursları</h1>
+            <p>İzin Alma və Müraciət Sistemi</p>
+        </div>
+
+        <div class="main-content">
+            <div class="form-section">
+                <h2>Yeni Müraciət</h2>
+                
+                <form id="applicationForm">
+                    <div class="form-group">
+                        <label for="applicationType">Müraciət Növü:</label>
+                        <select id="applicationType" class="form-control" required>
+                            <option value="">Müraciət növünü seçin</option>
+                            <option value="annual_leave">İllik Məzuniyyət</option>
+                            <option value="sick_leave">Xəstəlik Məzuniyyəti</option>
+                            <option value="personal_leave">Şəxsi İzin</option>
+                            <option value="business_trip">Ezamiyyət</option>
+                            <option value="overtime">Əlavə İş Saatları</option>
+                            <option value="salary_advance">Maaş Avansi</option>
+                            <option value="certificate_request">Arayış Tələbi</option>
+                            <option value="other">Digər</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="applicationContent">Müraciət Məzmunu:</label>
+                        <textarea id="applicationContent" class="form-control" placeholder="Müraciət məzmunu avtomatik yüklənəcək..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sendTo">Göndərilən:</label>
+                        <div class="send-to-section">
+                            <input type="text" id="sendTo" class="form-control" placeholder="Ad və soyad yazın..." autocomplete="off">
+                            <div class="autocomplete-dropdown" id="autocompleteDropdown"></div>
+                        </div>
+                        <div class="selected-recipients" id="selectedRecipients">
+                            <span style="color: #999; font-size: 14px;">Heç kim seçilməyib</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sənəd Əlavə Et (yalnız DOCX):</label>
+                        <div class="file-upload">
+                            <input type="file" id="fileUpload" accept=".docx" multiple>
+                            <label for="fileUpload" class="file-upload-label">
+                                📎 DOCX faylları seçin və ya bura sürükləyin
+                            </label>
+                        </div>
+                        <div class="attached-files" id="attachedFiles"></div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Müraciəti Göndər</button>
+                </form>
+            </div>
+
+            <div class="history-section">
+                <h2>Müraciət Tarixçəsi</h2>
+                <div id="historyList">
+                    <div class="history-item" onclick="showDetails(1)">
+                        <h4>İllik Məzuniyyət</h4>
+                        <div class="date">15 Avqust 2025</div>
+                        <span class="status pending">Gözləmədə</span>
+                    </div>
+                    <div class="history-item" onclick="showDetails(2)">
+                        <h4>Şəxsi İzin</h4>
+                        <div class="date">10 Avqust 2025</div>
+                        <span class="status approved">Təsdiqləndi</span>
+                    </div>
+                    <div class="history-item" onclick="showDetails(3)">
+                        <h4>Ezamiyyət</h4>
+                        <div class="date">5 Avqust 2025</div>
+                        <span class="status rejected">Rədd edildi</span>
+                    </div>
+                    <div class="history-item" onclick="showDetails(4)">
+                        <h4>Maaş Avansi</h4>
+                        <div class="date">1 Avqust 2025</div>
+                        <span class="status approved">Təsdiqləndi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Müraciət Detalları</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div id="modalBody">
+                <!-- Detallar buraya yüklənəcək -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Statik işçi məlumatları
+        const employees = [
+            { name: "Əli", surname: "Məmmədov", position: "Layihə Meneceri" },
+            { name: "Günel", surname: "İsmayılova", position: "İnsan Resursları Mütəxəssisi" },
+            { name: "Rəşad", surname: "Həsənov", position: "Maliyyə Direktoru" },
+            { name: "Leyla", surname: "Quliyeva", position: "Marketinq Meneceri" },
+            { name: "Elxan", surname: "Rəhimov", position: "İT Meneceri" },
+            { name: "Səbinə", surname: "Əliyeva", position: "Baş Mühasib" },
+            { name: "Fərid", surname: "Nəbiyev", position: "Satış Meneceri" },
+            { name: "Nərmin", surname: "Cəfərova", position: "Dizayner" }
+        ];
+
+        // Müraciət şablonları
+        const applicationTemplates = {
+            annual_leave: `Hörmətli Rəhbərlik,
+
+15 günlük illik məzuniyyətimin verilməsini xahiş edirəm.
+
+Məzuniyyət müddəti: [Tarix] - [Tarix]
+
+Məzuniyyət müddətində mənim vəzifələrimi [Əvəzedici şəxsin adı] yerinə yetirəcək.
+
+Diqqətinizə görə təşəkkür edirəm.
+
+Hörmətlə,
+[Adınız Soyadınız]`,
+
+            sick_leave: `Hörmətli Rəhbərlik,
+
+Səhhətimin pisləşməsi səbəbindən [X] gün xəstəlik məzuniyyəti almaq məcburiyyətindəyəm.
+
+Həkim arayışını əlavə edirəm.
+
+Təcili işlərlə bağlı [telefon nömrəsi] ilə əlaqə saxlaya bilərsiniz.
+
+Hörmətlə,
+[Adınız Soyadınız]`,
+
+            personal_leave: `Hörmətli Rəhbərlik,
+
+Şəxsi məsələlərlə bağlı [X] günlük izin almaq istəyirəm.
+
+İzin müddəti: [Tarix] - [Tarix]
+
+Bu müddətdə vacib işləri [Əvəzedici şəxsin adı] ilə koordinasiya edəcəm.
+
+Anlayışınız üçün təşəkkür edirəm.
+
+Hörmətlə,
+[Adınız Soyadınız]`,
+
+            business_trip: `Hörmətli Rəhbərlik,
+
+[Şəhər adı] şəhərinə [məqsəd] məqsədi ilə ezamiyyət göndərilməmi xahiş edirəm.
+
+Ezamiyyət müddəti: [Tarix] - [Tarix]
+Təxmini xərc: [məbləğ] AZN
+
+Ezamiyyət müddətində [telefon nömrəsi] ilə əlaqə saxlaya bilərsiniz.
+
+Hörmətlə,
+[Adınız Soyadınız]`,
+
+            overtime: `Hörmətli Rəhbərlik,
+
+[Layihə adı] ilə bağlı işlərin vaxtında başa çatdırılması üçün əlavə iş saatlarının hesablanmasını xahiş edirəm.
+
+Əlavə iş saatları: [tarix] - [saat sayı]
+
+Ətraflı hesabat əlavə edilmişdir.
+
+Hörmətlə,
+[Adınız Soyadınız]`,
+
+            salary_advance: `Hörmətli Rəhbərlik,
+
+Maddi çətinliklər səbəbindən [məbləğ] AZN məbləğində maaş avansi almaq istəyirəm.
+
+Bu məbləğ gələn ay maaşımdan tutulacaq.
+
+Anlayışınız üçün təşəkkür edirəm.
+
+Hörmətlə,
+[Adınız Soyadınız]`,
+
+            certificate_request: `Hörmətli Rəhbərlik,
+
+[Bank/Təşkilat adı] üçün iş yerindən arayış almaq istəyirəm.
+
+Arayışda aşağıdakı məlumatlar olmalıdır:
+- İş stajı
+- Maaş məbləği
+- Vəzifə
+
+Hörmətlə,
+[Adınız Soyadınız]`,
+
+            other: `Hörmətli Rəhbərlik,
+
+[Müraciət məzmunu]
+
+Hörmətlə,
+[Adınız Soyadınız]`
+        };
+
+        // Seçilmiş alıcılar
+        let selectedRecipients = [];
+        let attachedFiles = [];
+
+        // DOM elementləri
+        const applicationTypeSelect = document.getElementById('applicationType');
+        const applicationContentTextarea = document.getElementById('applicationContent');
+        const sendToInput = document.getElementById('sendTo');
+        const autocompleteDropdown = document.getElementById('autocompleteDropdown');
+        const selectedRecipientsDiv = document.getElementById('selectedRecipients');
+        const fileUpload = document.getElementById('fileUpload');
+        const attachedFilesDiv = document.getElementById('attachedFiles');
+
+        // Müraciət növü dəyişdikdə
+        applicationTypeSelect.addEventListener('change', function() {
+            const selectedType = this.value;
+            if (selectedType && applicationTemplates[selectedType]) {
+                applicationContentTextarea.value = applicationTemplates[selectedType];
+            } else {
+                applicationContentTextarea.value = '';
+            }
+        });
+
+        // Avtomatik tamamlama
+        sendToInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            
+            if (query.length === 0) {
+                hideAutocomplete();
+                return;
+            }
+
+            const filteredEmployees = employees.filter(emp => 
+                emp.name.toLowerCase().includes(query) || 
+                emp.surname.toLowerCase().includes(query)
+            );
+
+            if (filteredEmployees.length > 0) {
+                showAutocomplete(filteredEmployees);
+            } else {
+                hideAutocomplete();
+            }
+        });
+
+        function showAutocomplete(employees) {
+            autocompleteDropdown.innerHTML = '';
+            employees.forEach(emp => {
+                const item = document.createElement('div');
+                item.className = 'autocomplete-item';
+                item.innerHTML = `<strong>${emp.name} ${emp.surname}</strong> - ${emp.position}`;
+                item.addEventListener('click', () => selectEmployee(emp));
+                autocompleteDropdown.appendChild(item);
+            });
+            autocompleteDropdown.style.display = 'block';
+        }
+
+        function hideAutocomplete() {
+            autocompleteDropdown.style.display = 'none';
+        }
+
+        function selectEmployee(employee) {
+            // Təkrarlanmanı yoxla
+            const isAlreadySelected = selectedRecipients.some(recipient => 
+                recipient.name === employee.name && recipient.surname === employee.surname
+            );
+
+            if (!isAlreadySelected) {
+                selectedRecipients.push(employee);
+                updateSelectedRecipients();
+            }
+
+            sendToInput.value = '';
+            hideAutocomplete();
+        }
+
+        function updateSelectedRecipients() {
+            selectedRecipientsDiv.innerHTML = '';
+            
+            if (selectedRecipients.length === 0) {
+                selectedRecipientsDiv.innerHTML = '<span style="color: #999; font-size: 14px;">Heç kim seçilməyib</span>';
+                return;
+            }
+
+            selectedRecipients.forEach((recipient, index) => {
+                const tag = document.createElement('div');
+                tag.className = 'recipient-tag';
+                tag.innerHTML = `
+                    ${recipient.name} ${recipient.surname} - ${recipient.position}
+                    <button class="remove" onclick="removeRecipient(${index})">&times;</button>
+                `;
+                selectedRecipientsDiv.appendChild(tag);
+            });
+        }
+
+        function removeRecipient(index) {
+            selectedRecipients.splice(index, 1);
+            updateSelectedRecipients();
+        }
+
+        // Fayl yükləmə
+        fileUpload.addEventListener('change', function() {
+            const files = Array.from(this.files);
+            files.forEach(file => {
+                if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                    attachedFiles.push(file);
+                } else {
+                    alert('Yalnız DOCX faylları qəbul edilir!');
+                }
+            });
+            updateAttachedFiles();
+            this.value = ''; // Input-u təmizlə
+        });
+
+        function updateAttachedFiles() {
+            attachedFilesDiv.innerHTML = '';
+            attachedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <span>📄 ${file.name}</span>
+                    <button class="remove-file" onclick="removeFile(${index})">&times;</button>
+                `;
+                attachedFilesDiv.appendChild(fileItem);
+            });
+        }
+
+        function removeFile(index) {
+            attachedFiles.splice(index, 1);
+            updateAttachedFiles();
+        }
+
+        // Form göndərmə
+        document.getElementById('applicationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                type: applicationTypeSelect.value,
+                content: applicationContentTextarea.value,
+                recipients: selectedRecipients,
+                files: attachedFiles.map(f => f.name),
+                date: new Date().toLocaleDateString('az-AZ')
+            };
+
+            // Burada məlumatları serverə göndərərdiniz
+            console.log('Göndərilən məlumatlar:', formData);
+            
+            alert('Müraciətiniz uğurla göndərildi!');
+            
+            // Formu təmizlə
+            this.reset();
+            selectedRecipients = [];
+            attachedFiles = [];
+            updateSelectedRecipients();
+            updateAttachedFiles();
+            applicationContentTextarea.value = '';
+        });
+
+        // Tarixçə detalları
+        const historyDetails = {
+            1: {
+                type: 'İllik Məzuniyyət',
+                date: '15 Avqust 2025',
+                status: 'Gözləmədə',
+                content: '15 günlük illik məzuniyyətimin verilməsini xahiş edirəm...',
+                recipients: ['Əli Məmmədov - Layihə Meneceri'],
+                files: ['mezuniyyet-teqdimat.docx'],
+                submitDate: '15 Avqust 2025, 09:30'
+            },
+            2: {
+                type: 'Şəxsi İzin',
+                date: '10 Avqust 2025',
+                status: 'Təsdiqləndi',
+                content: 'Şəxsi məsələlərlə bağlı 2 günlük izin almaq istəyirəm...',
+                recipients: ['Günel İsmayılova - İnsan Resursları Mütəxəssisi'],
+                files: [],
+                submitDate: '10 Avqust 2025, 14:20',
+                responseDate: '10 Avqust 2025, 16:45',
+                response: 'İzininiz təsdiqləndi. İşinizdə uğurlar!'
+            },
+            3: {
+                type: 'Ezamiyyət',
+                date: '5 Avqust 2025',
+                status: 'Rədd edildi',
+                content: 'Ankara şəhərinə işgüzar ezamiyyət göndərilməmi xahiş edirəm...',
+                recipients: ['Rəşad Həsənov - Maliyyə Direktoru'],
+                files: ['ezamiyyet-teqdimat.docx'],
+                submitDate: '5 Avqust 2025, 11:15',
+                responseDate: '6 Avqust 2025, 10:30',
+                response: 'Bu ay büdcə məhdudiyyəti səbəbindən ezamiyyət mümkün deyil.'
+            },
+            4: {
+                type: 'Maaş Avansi',
+                date: '1 Avqust 2025',
+                status: 'Təsdiqləndi',
+                content: 'Maddi çətinliklər səbəbindən 500 AZN məbləğində maaş avansi...',
+                recipients: ['Səbinə Əliyeva - Baş Mühasib'],
+                files: [],
+                submitDate: '1 Avqust 2025, 08:45',
+                responseDate: '1 Avqust 2025, 12:00',
+                response: 'Avans təsdiqləndi və bugün hesabınıza köçürüləcək.'
+            }
+        };
+
+        function showDetails(id) {
+            const detail = historyDetails[id];
+            if (!detail) return;
+
+            document.getElementById('modalTitle').textContent = detail.type + ' - Detallar';
+            
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="detail-row">
+                    <div class="detail-label">Müraciət növü:</div>
+                    <div class="detail-value">${detail.type}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Təqdim tarixi:</div>
+                    <div class="detail-value">${detail.submitDate}</div>
+                </div>
+                <div class="detail-row">
+                                <div class="detail-label">Status:</div>
+                <div class="detail-value">
+                    <span class="status ${detail.status.toLowerCase().replace(' ', '')}">
+                        ${detail.status}
+                    </span>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Məzmun:</div>
+                <div class="detail-value">${detail.content}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Göndərilən:</div>
+                <div class="detail-value">${detail.recipients.join(', ')}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Əlavə edilmiş fayllar:</div>
+                <div class="detail-value">${detail.files.length > 0 ? detail.files.join(', ') : 'Yoxdur'}</div>
+            </div>
+            ${detail.responseDate ? `
+                <div class="detail-row">
+                    <div class="detail-label">Cavab tarixi:</div>
+                    <div class="detail-value">${detail.responseDate}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Cavab:</div>
+                    <div class="detail-value">${detail.response}</div>
+                </div>
+            ` : ''}
+        `;
+
+        document.getElementById('detailModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('detailModal').style.display = 'none';
+    }
+
+    // Kliklə modalın xaricində bağlanması
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('detailModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Esc düyməsi ilə modalın bağlanması
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    // Səhifə yüklənərkən autocomplete dropdown-u gizlət
+    hideAutocomplete();
+</script>
+</body>
+</html>
