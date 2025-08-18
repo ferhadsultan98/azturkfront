@@ -171,15 +171,9 @@ const MenuSection = ({
   };
 
   const renderProductsByCategory = () => {
-    const visibleCount = visibleProducts[selectedCategory] || productsPerPage;
-    const allCategoryProducts = filteredProducts.slice(0, visibleCount);
-
     if (selectedCategory !== "all") {
-      const categoryProducts = allCategoryProducts.filter(
-        (product) =>
-          product.category ===
-          categories.find((c) => c.id === selectedCategory)?.name
-      );
+      const visibleCount = visibleProducts[selectedCategory] || productsPerPage;
+      const categoryProducts = filteredProducts.slice(0, visibleCount);
       return (
         <div className="categorySection">
           <h3 className="categoryTitle">
@@ -197,11 +191,7 @@ const MenuSection = ({
               />
             ))}
           </div>
-          {filteredProducts.filter(
-            (p) =>
-              p.category ===
-              categories.find((c) => c.id === selectedCategory)?.name
-          ).length > visibleCount && (
+          {filteredProducts.length > visibleCount && (
             <div className="showMoreWrapper">
               <button
                 className="showMoreButton"
@@ -215,35 +205,45 @@ const MenuSection = ({
       );
     }
 
-    return (
-      <div className="categorySection">
-        <h3 className="categoryTitle">
-          {t("menu.allCategories") || "Bütün Kateqoriyalar"}
-        </h3>
-        <div className="productsGrid">
-          {allCategoryProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              openDetails={() => {
-                setSelectedProduct(product);
-                setIsModalOpen(true);
-              }}
-            />
-          ))}
-        </div>
-        {filteredProducts.length > visibleCount && (
-          <div className="showMoreWrapper">
-            <button
-              className="showMoreButton"
-              onClick={() => handleShowMore("all")}
-            >
-              {t("menu.showMore") || "Daha Çox Göstər"}
-            </button>
+    return categories
+      .filter((category) => category.id !== "all")
+      .map((category) => {
+        const visibleCount = visibleProducts[category.id] || productsPerPage;
+        const categoryProducts = filteredProducts
+          .filter((product) => product.category === category.name)
+          .slice(0, visibleCount);
+        if (!categoryProducts.length) return null;
+        return (
+          <div key={category.id} className="categorySection">
+            <h3 className="categoryTitle" data-aos="fade-right">
+              {category.name}
+            </h3>
+            <div className="productsGrid" data-aos="fade-right">
+              {categoryProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  openDetails={() => {
+                    setSelectedProduct(product);
+                    setIsModalOpen(true);
+                  }}
+                />
+              ))}
+            </div>
+            {filteredProducts.filter((p) => p.category === category.name)
+              .length > visibleCount && (
+              <div className="showMoreWrapper">
+                <button
+                  className="showMoreButton"
+                  onClick={() => handleShowMore(category.id)}
+                >
+                  {t("menu.showMore") || "Daha Çox Göstər"}
+                </button>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    );
+        );
+      });
   };
 
   return (

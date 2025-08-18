@@ -45,8 +45,7 @@
     "allCategories": "All Categories",
     "cleaningSubtitle": "Cleaning Products",
     "packagingSubtitle": "Packaging Products",
-    "detailsButton": "More Info",
-    "showMore": "Show More"
+    "detailsButton": "More Info" "showMore": ""
   },
   "discount": {
     "badge": "Big Discount",
