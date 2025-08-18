@@ -288,8 +288,8 @@ button {
     position: relative;
     padding-top: 60%;
     overflow: hidden;
-    background: url('/assets/minilogo.png') no-repeat center center / cover;
-    background-size: 90%;
+    // background: url('/assets/minilogos.png') no-repeat center center / cover;
+    background-size: cover;
      border-bottom: 1px solid #b72d44;
    
     &::before {
