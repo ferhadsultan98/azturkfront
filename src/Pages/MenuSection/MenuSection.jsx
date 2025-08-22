@@ -24,7 +24,7 @@ const MenuSection = ({
   const [packagingProducts, setPackagingProducts] = useState([]);
   const [error, setError] = useState(null);
   const [visibleProducts, setVisibleProducts] = useState({});
-  const productsPerPage = 6;
+  const productsPerPage = 12;
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const products =
     selectedSection === "cleaning" ? cleaningProducts : packagingProducts;

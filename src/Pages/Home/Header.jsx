@@ -75,7 +75,7 @@ const Header = () => {
     <header className="slider-container">
       <Swiper
         pagination={{ clickable: true }}
-        autoplay={{ delay: 2000, disableOnInteraction: false }}
+        autoplay={{ delay: 6000, disableOnInteraction: false }}
         modules={[Pagination, Autoplay]}
         className="mySwiper"
         loop={true}
